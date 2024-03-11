@@ -1,5 +1,6 @@
 package com.politecnicomalaga.NasdaqOilPrices.Control;
 
+import com.politecnicomalaga.NasdaqOilPrices.Model.Coordenada;
 import com.politecnicomalaga.NasdaqOilPrices.Model.Price;
 import com.politecnicomalaga.NasdaqOilPrices.View.MainActivity;
 
@@ -12,7 +13,7 @@ public class MainController {
     //SINGLETON Controller
     private static final String DATA_URL = "https://data.nasdaq.com/api/v3/datatables/QDL/OPEC.json?";
     private static MainController mySingleController;
-
+    private List<Coordenada> cartesiano;
     private List<Price> dataRequested;
     private JornadaListViewModel myjlViewModel;
 
@@ -23,6 +24,7 @@ public class MainController {
 
         dataRequested = new ArrayList<Price>();
         myjlViewModel = null;
+        cartesiano = new ArrayList<Coordenada>();
         //dataShowed = new ArrayList<Price>();
     }
 
@@ -55,8 +57,21 @@ public class MainController {
         Respuesta answer = new Respuesta(json);
         dataRequested = answer.getData();
 
+        //Relleno los datos de cartesiano
+        rellenarCoordenadas(dataRequested);
+
+
+
         //Ahora cada vez que nos traemos info, lo que hacemos es informar al ViewModel, no al activity
         if (myjlViewModel!=null) myjlViewModel.setData(dataRequested);
+    }
+
+    private void rellenarCoordenadas(List<Price> dataRequested) {
+        //Dar datos a list<Coordenadas> en for:each
+        for(int i=1;i<=100;i++){
+            Coordenada coordenada = new Coordenada(i,dataRequested.get(i).getPrice());
+            cartesiano.add(coordenada);
+        }
     }
 
     public void setErrorFromNasdaq(String error) {
@@ -68,6 +83,9 @@ public class MainController {
         MainController.activeActivity.errorData(error);
     }
 
+    public List<Coordenada> getCartesiano() {
+        return cartesiano;
+    }
 
     //este método lo usamos sólo de cara a los errores.
     public static void setActivity(MainActivity myAct) {
@@ -80,6 +98,7 @@ public class MainController {
         return this.dataRequested;
     }
 
+    //Listado de coordenadas
 
 
 }

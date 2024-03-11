@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -56,14 +57,14 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        //Button generar = (Button) findViewById(R.id.b_getData);
-        /*generar.setOnClickListener(new View.OnClickListener() {
+        Button generar = (Button) findViewById(R.id.b_getData);
+        generar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Getting data from Nasdaq Servers...", Toast.LENGTH_LONG).show();
-                MainController.getSingleton().requestDataFromNasdaq();
+                Intent intent = new Intent(MainActivity.this,GraphActivity.class);
+                startActivity(intent);
             }
-        });*/
+        });
 
         /*generar.setOnClickListener(new View.OnClickListener(){
 
@@ -90,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
         tv.setText(error);
 
     }
-
+    //button
+    //new intent mainActivity, graphActivity
+    //startActivity
 
 }
